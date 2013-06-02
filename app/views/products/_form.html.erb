@@ -12,8 +12,8 @@
 
   <% unless params[:all] %>
 
-    <%= f.hidden_field :current_step, value: @product.current_step - 1 %>
-    <%= render "products/steps/page#{@product.current_step}", f: f %>
+    <%= f.hidden_field :current_step, value: @product.current_step %>
+    <%= render "products/steps/page#{@product.current_step + 1}", f: f %>
 
     <div class="field">
       <%= f.submit "Back", name: "back_button" unless @product.first_step? %>

@@ -2,7 +2,7 @@ module MultiStepModel
   attr_accessor :current_step
 
   def current_step
-    @current_step.to_i + 1
+    @current_step.to_i
   end
 
   def current_step_valid?
@@ -17,15 +17,15 @@ module MultiStepModel
   end
 
   def step_forward
-    @current_step = @current_step.to_i + 1
+    @current_step = current_step + 1
   end
 
   def step_back
-    @current_step = @current_step.to_i - 1
+    @current_step = current_step - 1
   end
 
   def step?(step)
-    @current_step.nil? || current_step == step
+    @current_step.nil? || current_step + 1 == step
   end
 
   def last_step?
