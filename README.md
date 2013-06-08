@@ -16,6 +16,7 @@ This project demonstrates how to break up a model-backed form into multiple step
 	cd rails-multistep-form
 	bundle install
 	rake db:migrate
+	rake db:test:prepare
 	rails s
 
 ### Validations
@@ -32,9 +33,10 @@ validates :quantity, numericality: true, if: "step?(2)"
 * Then just follow the conventions used in this project
 
 ### Features
+* Multistep or single step create/update
 * Not much code and well abstracted
 * Validate attributes per step very easily
-* Multistep or single step create/update
+* Some RSpec tests included
 * Shouldn't break if you use the browser back/forward buttons
 * Easy to integrate into your own project
 * Rails 4 project, but works just as well in Rails 3
