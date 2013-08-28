@@ -36,4 +36,12 @@ module MultiStepModel
     step?(1)
   end
 
+  def method_missing(method_name, *args, &block)
+    if /^step(\d+)\?$/ =~ method_name
+      step?($1.to_i)
+    else
+      super
+    end
+  end
+
 end

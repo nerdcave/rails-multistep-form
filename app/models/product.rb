@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
-  validates :name, presence: true, if: "step?(1)"
-  validates :quantity, numericality: true, if: "step?(2)"
-  validates :tags, presence: true, if: "step?(3)"
+  validates :name, presence: true, if: :step1?
+  validates :quantity, numericality: true, if: :step2?
+  validates :tags, presence: true, if: :step3?
 
   include MultiStepModel
 

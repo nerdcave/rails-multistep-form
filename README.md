@@ -23,8 +23,8 @@ This project demonstrates how to break up a model-backed form into multiple step
 * To validate an attribute, all that's needed is a conditional with the step to enforce validation:
 
 ```ruby
-validates :name, presence: true, if: "step?(1)"
-validates :quantity, numericality: true, if: "step?(2)"
+validates :name, presence: true, if: :step1?
+validates :quantity, numericality: true, if: :step2?
 ```
 * If you create/update an object without the multistep form (i.e. in the rails console), the step logic will be ignored and all fields will validate as expected
 
