@@ -5,7 +5,8 @@ class ModelWizard
     @object_class = object_class
     @session = session
     @params = params
-    @session_params = "#{object_class.name.underscore}_params".to_sym
+    @param_key = ActiveModel::Naming.param_key(object_class)
+    @session_params = "#{@param_key}_params".to_sym
   end
 
   def start(object = nil)
@@ -15,8 +16,8 @@ class ModelWizard
     self
   end
 
-  def process(param_name, object = nil)
-    @session[@session_params].deep_merge!(@params[param_name]) if @params[param_name]
+  def process(object = nil)
+    @session[@session_params].deep_merge!(@params[@param_key]) if @params[@param_key]
     if object.nil?
       @object = @object_class.new(@session[@session_params])
     else
