@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    ModelWizard.new(Product, session).start(@product)
+    ModelWizard.new(@product, session).start
   end
 
   def create
@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    wizard = ModelWizard.new(Product, session, params).process(@product)
+    wizard = ModelWizard.new(@product, session, params).process
     if wizard.save
       redirect_to @product, notice: 'Product was successfully updated.'
     else
