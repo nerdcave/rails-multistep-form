@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :update, :edit, :destroy]
+  before_action :load_product, only: [:show, :update, :edit, :destroy]
+  before_action :load_wizard, only: [:new, :edit, :create, :update]
 
   def index
     @products = Product.all
@@ -9,18 +10,15 @@ class ProductsController < ApplicationController
   end
 
   def new
-    wizard = ModelWizard.new(Product, session).start
-    @product = wizard.object
+    @product = @wizard.object
   end
 
   def edit
-    ModelWizard.new(@product, session).start
   end
 
   def create
-    wizard = ModelWizard.new(Product, session, params).process
-    @product = wizard.object
-    if wizard.save
+    @product = @wizard.object
+    if @wizard.save
       redirect_to @product, notice: "Product saved!"
     else
       render :new
@@ -28,8 +26,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    wizard = ModelWizard.new(@product, session, params).process
-    if wizard.save
+    if @wizard.save
       redirect_to @product, notice: 'Product was successfully updated.'
     else
       render action: 'edit'
@@ -43,8 +40,17 @@ class ProductsController < ApplicationController
 
 private
 
-  def set_product
+  def load_product
     @product = Product.find(params[:id])
+  end
+
+  def load_wizard
+    @wizard = ModelWizard.new(@product || Product, session, params)
+    if self.action_name.in? %w[new edit]
+      @wizard.start
+    elsif self.action_name.in? %w[create update]
+      @wizard.process
+    end
   end
 
 end
