@@ -1,5 +1,5 @@
 module MultiStepModel
-  attr_accessor :current_step
+  attr_writer :current_step
 
   def current_step
     @current_step.to_i
@@ -24,6 +24,8 @@ module MultiStepModel
     @current_step = current_step - 1
   end
 
+  # Returns true if step is not set to ensure ALL validations are executed upon save/validate
+  # (state of the object is considered to be on every step if step is not set).
   def step?(step)
     @current_step.nil? || current_step + 1 == step
   end
