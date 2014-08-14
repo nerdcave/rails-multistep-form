@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  <strong>Category names:</strong>
+  <%= @product.categories.map(&:name).join(", ") %>
+</p>
+
+<p>
   <strong>Available at:</strong>
   <%= @product.available_at %>
 </p>

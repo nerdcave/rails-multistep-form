@@ -8,7 +8,7 @@
     </div>
   <% end %>
 
-<%= form_for @product do |f| %>
+<%= form_for build_product(@product) do |f| %>
 
   <% unless params[:all] %>
 

@@ -2,7 +2,15 @@
   <%= f.label :price %><br />
   <%= f.text_field :price %>
 </div>
+
 <div class="field">
   <%= f.label :quantity %><br />
   <%= f.number_field :quantity %>
 </div>
+
+<%= f.fields_for :categories do |cf| %>
+  <div class="field">
+    <%= cf.label :name, "Category name (nested model field):" %><br />
+    <%= cf.text_field :name %>
+  </div>
+<% end %>

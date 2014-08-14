@@ -6,7 +6,7 @@ describe "Product pages" do
   end
 
   def step_2?
-    has_selector?("input[type!='hidden']", count: 4) && find('#product_current_step').value() == "1"
+    has_selector?("input[type!='hidden']", count: 5) && find('#product_current_step').value() == "1"
   end
 
   def step_3?
@@ -20,6 +20,7 @@ describe "Product pages" do
     end
     if step >= 3
       fill_in "product_quantity", with: product.quantity
+      fill_in "product_categories_attributes_0_name", with: product.categories.first.name
       click_button "Next"
     end
   end
@@ -33,18 +34,19 @@ describe "Product pages" do
       before { visit new_product_path(all: 1) }
 
       it "should show all fields" do
-        should have_selector("div.field", count: 6)
+        should have_selector("div.field", count: 7)
       end
 
       it "should show errors" do
         click_button "Create"
-        should have_selector("div.field_with_errors", count: 6)
+        should have_selector("div.field_with_errors", count: 8)
       end
 
       it "should create product" do
         fill_in "product_name", with: product.name
         fill_in "product_quantity", with: product.quantity
         fill_in "product_tags", with: product.tags
+        fill_in "product_categories_attributes_0_name", with: product.categories.first.name
         expect { click_button "Create" }.to change(Product, :count).by(1)
       end
     end
@@ -123,7 +125,7 @@ describe "Product pages" do
       end
 
       it "should show all fields" do
-        should have_selector("div.field", count: 6)
+        should have_selector("div.field", count: 7)
         @required.each { |field| find("#product_#{field.to_s}").value().should eq product[field].to_s }
       end
 
