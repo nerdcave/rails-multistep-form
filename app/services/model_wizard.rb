@@ -10,7 +10,7 @@ class ModelWizard
   def start
     @session[@session_params] = {}
     set_object
-    @object.current_step = 0
+    @object.current_step = @params[:step].to_i
   end
 
   def process
