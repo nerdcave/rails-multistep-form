@@ -5,15 +5,15 @@ describe Product do
   subject { product }
 
   it "should be valid and save" do
-    product.should be_valid
-    product.save.should be_true
+    expect(product).to be_valid
+    expect(product.save).to be_truthy
   end
 
   it "should have errors if invalid" do
     required_fields = [:name, :quantity, :tags]
     required_fields.each { |field| product[field] = nil }
-    product.should_not be_valid
-    required_fields.each { |field| product.errors.has_key?(field).should be_true }
+    expect(product).to_not be_valid
+    required_fields.each { |field| expect(product.errors).to have_key(field) }
   end
   
 end

@@ -1,0 +1,5 @@
+<%= hidden_field_tag :all, 1 %>
+<% Product.total_steps.times do |step| %>
+  <%= render "products/steps/page#{step + 1}", f: f %>
+<% end %>
+<%= f.submit %>

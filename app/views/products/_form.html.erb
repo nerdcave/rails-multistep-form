@@ -1,34 +1,17 @@
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-      <% @product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if @product.errors.any? %>
+  <div id="errors">
+    <ul>
+    <% @product.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 
 <%= form_for build_product(@product) do |f| %>
-
-  <% unless params[:all] %>
-
-    <%= f.hidden_field :current_step, value: @product.current_step %>
-    <%= render "products/steps/page#{@product.current_step + 1}", f: f %>
-
-    <div class="field">
-      <%= f.submit "Back", name: "back_button" unless @product.first_step? %>
-      <%= f.submit @product.last_step? ? nil: "Next" %>
-    </div>
-
+  <% if params[:all].nil? %>
+    <%= render 'products/steps/current_step', f: f %>
   <% else %>
-
-    <%# all the fields on one page... %>
-    <%= hidden_field_tag :all, 1 %>
-    <% Product.total_steps.times do |step| %>
-      <%= render "products/steps/page#{step + 1}", f: f %>
-    <% end %>
-    <%= f.submit %>
-
+    <%= render 'products/steps/all_steps', f: f %>
   <% end %>
-
 <% end %>
